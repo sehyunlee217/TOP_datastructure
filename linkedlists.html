@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linked Lists</title>
+  </head>
+  <body>
+    <script>
+      // Node class to generate basic node
+      class Node {
+        constructor(value = null, nextNode = null) {
+          this.value = value;
+          this.nextNode = nextNode;
+        }
+      }
+      //  LinkedList class that stores list of nodes
+      class LinkedList {
+        constructor(list = []) {
+          this.list = list;
+        }
+
+        append(value) {
+          let newNode = new Node(value);
+          //   if list is not empty, new node at back references to node in front
+          if (this.list.length != 0) {
+            this.list[this.list.length - 1].nextNode = newNode;
+          }
+          this.list.push(newNode);
+        }
+
+        prepend(value) {
+          let newNode = new Node(value);
+          //   node before reference to new prepended node in front
+          if (this.list.length != 0) {
+            newNode.nextNode = this.list[0];
+          }
+          this.list.unshift(newNode);
+        }
+
+        size() {
+          return this.list.length;
+        }
+
+        head() {
+          return this.list[0];
+        }
+
+        tail() {
+          return this.list[this.list.length - 1];
+        }
+
+        at(index) {
+          return this.list[index];
+        }
+
+        // remove the reference link when popped
+        pop() {
+          this.list[this.list.length - 2].nextNode = null;
+          this.list.pop();
+        }
+
+        contains(value) {
+          for (let node of this.list) {
+            if (node.value == value) {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        // created new array that contains values with the same index
+        find(value) {
+          let valueList = this.list.map((node) => {
+            return node.value;
+          });
+          if (valueList.indexOf(value) == -1) {
+            return false;
+          } else {
+            return valueList.indexOf(value);
+          }
+        }
+
+        // convert linked list into string
+        toString() {
+          let listString = "";
+          for (let node of this.list) {
+            listString += `( ${node.value} ) -> `;
+          }
+
+          if (this.list[this.list.length - 1].nextNode == null) {
+            listString += "null";
+          }
+          console.log(listString);
+        }
+      }
+
+      let list1 = new LinkedList();
+
+      list1.append("value1");
+      list1.append("value2");
+      list1.prepend("value0");
+      list1.append("value3");
+      list1.pop();
+      list1.toString();
+    </script>
+  </body>
+</html>
